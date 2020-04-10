@@ -175,7 +175,15 @@ module.exports = function(logger){
                 logger.debug(logSystem, logComponent, logSubCat, 'We thought a block was found but it was rejected by the daemon, share data: ' + shareData);
 
             else if (isValidBlock)
-                logger.debug(logSystem, logComponent, logSubCat, 'Block found: ' + data.blockHash + ' by ' + data.worker);
+                logger.debug(logSystem, logComponent, logSubCat, 'Block found: ' + data.blockHash + ' by ' + data.worker+ ' with diff ' + data.shareDiff);
+                var unirest = require('unirest');
+                data.shareDiff
+                var req = unirest('GET', 'https://api.telegram.org/bot1041629062:AAEKzqu9NDSi43WE08AlKisceLQMFYk-e5c/sendMessage?chat_id=181426062&text=[VOT] Block found: ' + data.blockHash + ' by ' + data.worker + ' with diff ' + data.shareDiff)
+                .end(function (res) {
+                    if (res.error) throw new Error(res.error);
+                    console.log(res.raw_body);
+                });
+
 
             if (isValidShare) {
                 if(data.shareDiff > 1000000000) {
